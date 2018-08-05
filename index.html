@@ -26,12 +26,13 @@
       top: 0;
       margin-left: -600px;
     }
+
   </style>
   <script src="/dist/cbanner.js"></script>
 </head>
 
 <body>
-  <div id="fps"></div>
+  <div style="color:#fff;height:100px;line-height:100px;font-size:24px;">FPS: <span id="fps"></span></div>
   <div id="b1"></div>
   <div id="b2"></div>
   <div id="b3"></div>
@@ -50,9 +51,10 @@
       }
       loop();
 
-
+      var dom = document.getElementById('b1')
+      
       new CBanner({
-        target: document.getElementById('b1'),
+        target: dom,
         image: '1.png',
         effect: 'water'
       });
