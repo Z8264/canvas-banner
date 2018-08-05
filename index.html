@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>C Banner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      background: #333;
+    }
+
+    div {
+      position: relative;
+      width: 1200px;
+      height: 200px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+
+    div canvas {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      margin-left: -600px;
+    }
+  </style>
+  <script src="/dist/cbanner.js"></script>
+</head>
+
+<body>
+  <div id="fps"></div>
+  <div id="b1"></div>
+  <div id="b2"></div>
+  <div id="b3"></div>
+
+  <script>
+    (function () {
+
+      var fps = 0;
+      var st = new Date(), et;
+      var fpsDom = document.getElementById('fps');
+      function loop() {
+        requestAnimationFrame(loop);
+        et = new Date();
+        fps++;
+        if (et - st >= 1000) { fpsDom.innerHTML = fps; st = et; fps = 0; }
+      }
+      loop();
+
+
+      new CBanner({
+        target: document.getElementById('b1'),
+        image: '1.png',
+        effect: 'water'
+      });
+
+      new CBanner({
+        target: document.getElementById('b2'),
+        image: '2.png',
+        effect: 'light'
+      });
+
+      new CBanner({
+        target: document.getElementById('b3'),
+        image: '3.png',
+        effect: 'snow'
+      });
+    })();
+  </script>
+</body>
+
+</html>
