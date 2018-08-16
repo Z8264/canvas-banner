@@ -40,33 +40,34 @@
   <script>
     (function () {
 
-      var fps = 0;
-      var st = new Date(), et;
-      var fpsDom = document.getElementById('fps');
-      function loop() {
-        requestAnimationFrame(loop);
-        et = new Date();
-        fps++;
-        if (et - st >= 1000) { fpsDom.innerHTML = fps; st = et; fps = 0; }
+      if(window.requestAnimationFrame){
+        var fps = 0;
+        var st = new Date(), et;
+        var fpsDom = document.getElementById('fps');
+        function loop() {
+          requestAnimationFrame(loop);
+          et = new Date();
+          fps++;
+          if (et - st >= 1000) { fpsDom.innerHTML = fps; st = et; fps = 0; }
+        }
+        loop();
       }
-      loop();
 
-      var dom = document.getElementById('b1')
       
       new CBanner({
-        target: dom,
+        el: document.getElementById('b1'),
         image: '1.png',
         effect: 'water'
       });
 
       new CBanner({
-        target: document.getElementById('b2'),
+        el: document.getElementById('b2'),
         image: '2.png',
         effect: 'light'
       });
 
       new CBanner({
-        target: document.getElementById('b3'),
+        el: document.getElementById('b3'),
         image: '3.png',
         effect: 'snow'
       });

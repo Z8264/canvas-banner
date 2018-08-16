@@ -1,8 +1,8 @@
+import Water from "./effects/water";
+import Light from "./effects/light";
+import Snow from "./effects/snow";
 
-import Water from './effects/water';
-import Light from './effects/light';
-import Snow from './effects/snow';
-
+import Effect from "./effects/effect";
 /**
  * requestAnimationFrame 兼容方案
  */
@@ -17,55 +17,64 @@ window.requestAnimationFrame = (function () {
     };
 })();
 
-
 /**
  * CBanner
- * @param {Object} options 
+ * @param {Object} options
  */
 function CBanner(options = {}) {
   // 默认设置
   let defaults = {
-    target: '',
-    image: '',
-    width: 1200,
+    el: "",
+    image: "",
+    width: 1000,
     height: 200,
-    effect: ''
-  }
+    effect: ""
+  };
 
   // 合并设置
   for (var item in defaults) {
     if (!options.hasOwnProperty(item)) {
-      options[item] = defaults[item]
+      options[item] = defaults[item];
     }
   }
 
-  // 创建canvas
-  let canvas = document.createElement('canvas');
+  // 创建canvas, 添加到el中
+  let canvas = document.createElement("canvas");
   canvas.width = options.width;
   canvas.height = options.height;
-  options.target.appendChild(canvas);
+  options.el.appendChild(canvas);
 
-  // 创建ctx,image
-  let ctx = canvas.getContext('2d');
+  // 创建ctx
+  let ctx = canvas.getContext("2d");
+
+  // 调用效果
+
+  Effect(ctx, options);
+  return this;
+
   let image = new Image();
   image.src = options.image;
-  image.onload = function () {
+  image.onload = function() {
+    if (!window.requestAnimationFrame) {
+      ctx.drawImage(image, 0, 0);
+      return;
+    }
     switch (options.effect) {
-      case 'water':
+      case "water":
         new Water(canvas, ctx, image);
         break;
-      case 'light':
+      case "light":
         new Light(canvas, ctx, image);
         break;
-      case 'snow':
+      case "snow":
         new Snow(canvas, ctx, image);
         break;
       default:
         ctx.drawImage(image, 0, 0);
     }
-  }
+  };
 
   return this;
 }
 
-window.CBanner = CBanner
+window.CBanner = CBanner;
